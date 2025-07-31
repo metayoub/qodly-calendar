@@ -108,7 +108,15 @@ const Scheduler: FC<ISchedulerProps> = ({
     return `${hours.toString().padStart(2, '0')}:${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-  let attributeList = attributes?.map((e) => e.Attribute);
+  let attributeList = attributes?.map((e) => {
+    return {
+      name: e.Attribute,
+      type: e.dataType,
+      format: e.format,
+    };
+  });
+
+  console.log(attributeList);
 
   const { id: propertyId } = splitDatasourceID(property);
   property = propertyId;
@@ -121,8 +129,8 @@ const Scheduler: FC<ISchedulerProps> = ({
   const { id: colorPropId } = splitDatasourceID(colorProp);
   colorProp = colorPropId;
   for (let index = 0; index < attributeList.length; index++) {
-    const { id: attributeId } = splitDatasourceID(attributeList[index]);
-    attributeList[index] = attributeId;
+    const { id: attributeId } = splitDatasourceID(attributeList[index].name);
+    attributeList[index].name = attributeId;
   }
 
   const weekQuery = async (source: datasources.DataSource, date: Date) => {
@@ -231,11 +239,13 @@ const Scheduler: FC<ISchedulerProps> = ({
       ...obj,
       color: obj[colorProp] || colorgenerated[index],
       attributes: attributeList?.reduce((acc: { [key: string]: any }, e) => {
-        acc[e] = obj[e];
+        acc[e.name] = obj[e.name];
         return acc;
       }, {}),
     }));
   }, [entities, colorgenerated, colorProp, attributeList]);
+
+  console.log(data);
 
   const getWeekDates = (startDate: Date) => {
     const dates = [];
@@ -670,9 +680,9 @@ const Scheduler: FC<ISchedulerProps> = ({
                                     <span
                                       key={`attribute-${index}-${e}`}
                                       className={`attribute ${style?.fontSize ? style?.fontSize : 'text-sm'} basis-1/2 text-start`}
-                                      title={event?.attributes[e]?.toString()}
+                                      title={event?.attributes[e.name]?.toString()}
                                     >
-                                      {event.attributes[e]}
+                                      {event.attributes[e.name].toString()}
                                     </span>
                                   );
                                 })}

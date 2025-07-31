@@ -466,7 +466,7 @@ const Calendar: FC<ICalendarProps> = ({
                                 className={`attribute ${style?.fontSize ? style?.fontSize : 'text-sm'} basis-1/2 text-start`}
                                 title={item?.attributes[e]?.toString()}
                               >
-                                {item.attributes[e]}
+                                {item.attributes[e]?.toString()}
                               </span>
                             );
                           })}

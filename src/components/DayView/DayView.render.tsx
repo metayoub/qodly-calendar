@@ -564,7 +564,7 @@ const DayView: FC<IDayViewProps> = ({
                                   className={`attribute ${style?.fontSize ? style?.fontSize : 'text-sm'} basis-1/2 text-start`}
                                   title={event?.attributes[e]?.toString()}
                                 >
-                                  {event.attributes[e]}
+                                  {event.attributes[e]?.toString()}
                                 </span>
                               );
                             })}
