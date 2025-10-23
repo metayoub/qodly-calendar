@@ -18,23 +18,33 @@
   },
   "dependencies": {
     "@ctrl/tinycolor": "^4.1.0",
-    "@ws-ui/webform-editor": "1.5.4",
+    "@ws-ui/craftjs-core": "^0.2.26",
+    "@ws-ui/craftjs-layers": "^0.2.4",
+    "@ws-ui/craftjs-utils": "^0.2.3",
+    "@ws-ui/webform-editor": "^1.6.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@qodly/cli": "^0.3.2",
+    "@module-federation/vite": "^1.8.1",
+    "@qodly/cli": "^0.4.6",
     "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react-swc": "^3.8.1",
-    "@ws-ui/vite-plugins": "^1.0.1",
+    "@vitejs/plugin-react-swc": "^4.1.0",
+    "@ws-ui/vite-plugins": "^1.6.10",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "typescript": "^5.5.4",
-    "vite": "^6.2.6"
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1"
+  },
+  "peerDependencies": {
+    "@ws-ui/code-editor": "^1.6.10",
+    "@ws-ui/icons": "^1.6.10",
+    "@ws-ui/shared": "^1.6.10",
+    "@ws-ui/store": "^1.6.10"
   }
 }
