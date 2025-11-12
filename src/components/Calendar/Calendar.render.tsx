@@ -264,7 +264,15 @@ const Calendar: FC<ICalendarProps> = ({
     switch (selectedElement.type) {
       case 'scalar':
         selectedElement.setValue(null, item);
-        emit('onItemClick', { selectedData: selectedElement });
+        const serializedData = {
+          [property]: item[property],
+          [startDate]: item[startDate],
+          [endDate]: item[endDate],
+          color: item.color,
+          attributes: item.attributes,
+        };
+
+        emit('onItemClick', { selectedData: serializedData });
         break;
       case 'entity':
         const index = findIndex(
@@ -279,7 +287,15 @@ const Calendar: FC<ICalendarProps> = ({
           datasource: loaderDatasource,
           currentElement: selectedElement,
         });
-        emit('onItemClick', { selectedData: selectedElement });
+
+        const serializedEntity = {
+          [property]: item[property],
+          [startDate]: item[startDate],
+          [endDate]: item[endDate],
+          color: item.color,
+          attributes: item.attributes,
+        };
+        emit('onItemClick', { selectedData: serializedEntity });
         break;
     }
   };
