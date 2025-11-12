@@ -205,6 +205,52 @@ const Calendar: FC<ICalendarProps> = ({
     fetchData();
   }, [loaderDatasource]);
 
+  //fix feat/issue #62 attempt: Sync selectedElement+selectedDate changes with calendar
+  useEffect(() => {
+    if (!selectedElement || !loaderDatasource || !attrs?.length) return;
+
+    const handleChange = async () => {
+      const value = await selectedElement.getValue();
+      if (!value) return;
+
+      setSelEvent(value);
+
+      if (value[startDate]) {
+        const parsedDate = new Date(value[startDate]);
+        if (!isNaN(parsedDate.getTime())) {
+          setDate(parsedDate);
+          monthQuery(loaderDatasource, parsedDate);
+        }
+      }
+    };
+
+    selectedElement.addListener('changed', handleChange);
+
+    return () => {
+      unsubscribeFromDatasource(selectedElement, handleChange);
+    };
+  }, [selectedElement, startDate, loaderDatasource]);
+
+  useEffect(() => {
+    if (!selectedDate) return;
+
+    const { id, namespace } = splitDatasourceID(selectedDate);
+    const inputDate =
+      window.DataSource.getSource(id, namespace) || window.DataSource.getSource(selectedDate, path);
+    if (!inputDate) return;
+
+    const updateDate = async () => {
+      const val = await inputDate.getValue();
+      if (!val) return;
+      setDate(val);
+      setSelDate(val);
+      monthQuery(loaderDatasource, val);
+    };
+    updateDate();
+    inputDate.addListener('changed', updateDate);
+    return () => unsubscribeFromDatasource(inputDate, updateDate);
+  }, [selectedDate, path]);
+
   const isSelectedEvent = (event: any) => {
     return (
       (event[property] === selEvent?.[property] &&
