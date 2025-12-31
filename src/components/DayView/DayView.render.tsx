@@ -183,11 +183,11 @@ const DayView: FC<IDayViewProps> = ({
     return () => {
       unsubscribeFromDatasource(datasource, cb);
     };
-  }, [datasource, date, loaderDatasource, (datasource as any).entitysel]);
+  }, [datasource, date, loaderDatasource, (datasource as any)?.entitysel]);
 
   useEffect(() => {
     const fetchData = async () => {
-      let selLength = await loaderDatasource.getValue('length');
+      let selLength = await loaderDatasource?.getValue('length');
       setStep({ start: 0, end: selLength });
       await fetchIndex(0);
     };
@@ -336,7 +336,7 @@ const DayView: FC<IDayViewProps> = ({
 
   const data = useMemo(
     () =>
-      (datasource.dataType === 'array' ? value : entities).map((obj: any, index) => ({
+      (datasource?.dataType === 'array' ? value : entities).map((obj: any, index) => ({
         ...obj,
         color: obj[colorProp] || colorgenerated[index],
         attributes: attributeList?.reduce((acc: { [key: string]: any }, e) => {
