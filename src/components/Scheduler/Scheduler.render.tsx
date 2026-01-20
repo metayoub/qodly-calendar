@@ -210,11 +210,11 @@ const Scheduler: FC<ISchedulerProps> = ({
     return () => {
       unsubscribeFromDatasource(datasource, cb);
     };
-  }, [datasource, date, loaderDatasource, (datasource as any).entitysel]);
+  }, [datasource, date, loaderDatasource, (datasource as any)?.entitysel]);
 
   useEffect(() => {
     const fetchData = async () => {
-      let selLength = await loaderDatasource.getValue('length');
+      let selLength = await loaderDatasource?.getValue('length');
       setStep({ start: 0, end: selLength });
       await fetchIndex(0);
     };
@@ -227,7 +227,7 @@ const Scheduler: FC<ISchedulerProps> = ({
   }, [entities.length]);
 
   const data = useMemo(() => {
-    return (datasource.dataType === 'array' ? value : entities).map((obj: any, index) => ({
+    return (datasource?.dataType === 'array' ? value : entities).map((obj: any, index) => ({
       ...obj,
       color: obj[colorProp] || colorgenerated[index],
       attributes: attributeList?.reduce((acc: { [key: string]: any }, e) => {
